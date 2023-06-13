@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "946529ff-3a69-4356-8a12-379fb2f27a77",
+		"name": "ReqressPVariables",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27958832"
+	},
+	"item": [
+		{
+			"name": "GETRequest",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//local variable \r",
+							"pm.variables.set(\"url_local_variable\", \"https://reqres.in\");\r",
+							"\r",
+							"//create global variable using pre-request script\r",
+							"pm.globals.set(\"userid_global\", \"2\");\r",
+							"\r",
+							"//create environment variable using pre-request script\r",
+							"pm.environment.set(\"userid_env_variable\",\"2\");\r",
+							"\r",
+							"//create collection variable using pre-request script\r",
+							"pm.collectionVariables.set(\"userid_collection_variable\", \"2\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//print variables \r",
+							"console.log(pm.globals.get(\"userid_global\"));\r",
+							"console.log(pm.environment.get(\"userid_env_variable\"));\r",
+							"console.log(pm.collectionVariables.get(\"userid_collection_variable\"));\r",
+							"console.log(pm.variables.get(\"url_local_variable\"))\r",
+							"\r",
+							"//unset the variables created in pre-request script except local variable. Local variable automatically got removed because it will not store anywhere.\r",
+							"pm.globals.unset(\"userid_global\");\r",
+							"\r",
+							"//create environment variable using pre-request script\r",
+							"pm.environment.unset(\"userid_env_variable\");\r",
+							"\r",
+							"//create collection variable using pre-request script\r",
+							"pm.collectionVariables.unset(\"userid_collection_variable\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_local_variable}}/api/users?page={{userid_global}}",
+					"host": [
+						"{{url_local_variable}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{userid_global}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POSTRequest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Tushar\",\r\n    \"job\": \"QA Lead\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_collection}}/api/users",
+					"host": [
+						"{{url_collection}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUTRequest",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Karmore\",\r\n    \"job\": \"SDET\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_collection}}/api/users/438",
+					"host": [
+						"{{url_collection}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"438"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETERequest",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url_collection}}/api/users/438",
+					"host": [
+						"{{url_collection}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"438"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_collection",
+			"value": "https://reqres.in",
+			"type": "default"
+		}
+	]
+}

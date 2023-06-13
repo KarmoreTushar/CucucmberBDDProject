@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "1e4ea52c-2191-4ca7-a562-8f3388ff2b1d",
+		"name": "BooksAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27958832"
+	},
+	"item": [
+		{
+			"name": "Get token",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"Tushar\",\r\n   \"clientEmail\": \"tusharkarmore92@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://simple-books-api.glitch.me/api-clients",
+					"protocol": "https",
+					"host": [
+						"simple-books-api",
+						"glitch",
+						"me"
+					],
+					"path": [
+						"api-clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//validate response\r",
+							"var jsonResData=JSON.parse(responseBody); //get response body \r",
+							"pm.test(\"Status is ok\",()=>{\r",
+							"    pm.expect(jsonResData.status).to.eql(\"OK\");\r",
+							"});\r",
+							"//validate response status \r",
+							"pm.test(\"Ststus code is 200\", ()=>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Content-type header is present\",()=>{\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"Content-Type header is application/json\", ()=>{\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllBooks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/books",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var res_body = JSON.parse(responseBody);\r",
+							"pm.test(\"Id 2 is shown\", () => {\r",
+							"    pm.expect(res_body.id).to.eql(2);\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 500ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"});\r",
+							"pm.test(\"Size is less than 400B\",() =>{\r",
+							"    pm.expect(pm.response.responseSize).to.be.below(400);\r",
+							"});\r",
+							"pm.test(\"Content-type header is present\",()=>{\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"Content-Type header is application/json\", ()=>{\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/books/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"books",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit an order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Validate order is created or not\r",
+							"var jsonResData=JSON.parse(responseBody);\r",
+							"pm.test(\"Order is created\",()=>{\r",
+							"    pm.expect(jsonResData.created).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"//Validate order id is created or not\r",
+							"pm.test(\"Order id is created\",()=>{\r",
+							"    pm.expect(jsonResData.orderId).is.exist;\r",
+							"});\r",
+							"\r",
+							"//Set order id as gloval variable\r",
+							"var orderid=jsonResData.orderId;\r",
+							"pm.globals.set(\"order_id_books\",orderid);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Creating ramdom name to submit an order\r",
+							"var random=Math.random().toString(36).substring(2);\r",
+							"var customer_name=\"Ram\"+random;\r",
+							"pm.globals.set(\"cust_name\",customer_name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bookId\": 1,\r\n  \"customerName\": \"{{cust_name}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/orders",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all orders",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/orders",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get single order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/orders/{{order_id_books}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"orders",
+						"{{order_id_books}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an order",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Creating ramdom name to submit an order\r",
+							"var random=Math.random().toString(36).substring(2);\r",
+							"var cust_name_update=\"Lemon\"+random;\r",
+							"pm.globals.set(\"update_cust_name\",cust_name_update);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\":\"{{update_cust_name}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/orders/{{order_id_books}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"orders",
+						"{{order_id_books}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.unset(\"order_id_books\");\r",
+							"pm.globals.unset(\"cust_name\");\r",
+							"pm.globals.unset(\"update_cust_name\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/orders/{{order_id_books}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"orders",
+						"{{order_id_books}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ordered Book",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/books/{{order_id_books}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"books",
+						"{{order_id_books}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "9c7828d8e2cad21a34d3cb3f00ad94ebde4c73d60a5671484a305e115af1a24b",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://simple-books-api.glitch.me",
+			"type": "default"
+		}
+	]
+}

@@ -1,0 +1,50 @@
+{
+	"info": {
+		"_postman_id": "9f5e45c5-1724-40e6-b5e6-f8d6fe35146c",
+		"name": "File Upload",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27958832"
+	},
+	"item": [
+		{
+			"name": "Upload single file",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Multiple File",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/G:/Software Testing/Acceleration Institute/Acceleration Institute Daily Notes/Manual/API Testing Manual/dummyfIleForFileUploadAPI.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/uploadFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploadFile"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "7b8c14e3-412b-44a9-9ef5-6c6180894adb",
+		"name": "PetStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27958832"
+	},
+	"item": [
+		{
+			"name": "Place an order for pet",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/oauth/authorize/authorize?response_type=code&client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope={SCOPE}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"oauth",
+						"authorize",
+						"authorize"
+					],
+					"query": [
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "client_id",
+							"value": "{CLIENT_ID}"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "{REDIRECT_URI}"
+						},
+						{
+							"key": "scope",
+							"value": "{SCOPE}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
